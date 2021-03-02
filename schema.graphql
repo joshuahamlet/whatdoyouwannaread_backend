@@ -1,0 +1,97 @@
+type Query {
+  getUsers: [User]
+  messages(channelId: ID): [MessagePop]
+  getBooks: [Book]
+  getSelectedBooks(userId: ID): [Book]
+  getUserFriends(userId: ID): [User]
+  getUserChannels: [Channel]
+}
+
+type Mutation {
+  addMessage(input: MessageInput!): Message
+  addUser(userName: String!, email: String!): User
+  addBook: [BookStatus]
+  selectBook(new_book_selected: ID): User
+  rejectBook(new_book_rejected: ID): User
+  snoozeBook(new_book_snoozed: ID): User
+
+}
+
+type Subscription {
+  messageAdded(messageChannel: ID): Message
+}
+
+type Channel {
+  _id: ID!
+  channelName: String 
+  channelMembers: [User]
+  messageList: [Message]
+}
+
+type Message {
+  _id: ID
+  messageFrom: User
+  messageText: String
+  messageChannel: Channel
+}
+
+type MessagePop {
+  _id: ID
+  messageFrom: User 
+  messageText: String
+  messageChannel: Channel
+}
+
+type User {
+  _id: ID
+  userName: String
+  userIcon: String
+  email: String
+  password: String
+  friends: [ID]
+  channels: [ID]  
+  books_selected: [ID]
+  books_rejected: [ID]
+  books_snoozed: [snoozedBook]
+}
+
+type Book {
+  _id: ID!
+  title: String!
+  author: String!
+  book_image: String!
+  description: String!
+  primary_isbn13: String!
+  bestsellers_date: String!
+}
+
+type BookStatus {
+  _id: ID
+  title: String
+  author: String
+  book_image: String
+  description: String
+  primary_isbn13: String
+  bestsellers_date: String
+  status: String
+}
+
+type snoozedBook {
+  book_id: ID,
+  date_created: String
+}
+
+input MessageInput {
+  messageFrom: ID 
+  messageText: String 
+  messageChannel: ID
+}
+
+input BookInput {
+  title: String!  
+  author: String!
+  book_image: String!
+  description: String!
+  primary_isbn13: String!
+}
+
