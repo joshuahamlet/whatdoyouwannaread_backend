@@ -6,7 +6,7 @@ const fs = require('fs')
 
 const cronJob = async(date) => {
     try {   
-      const response = await fetch(`https://api.nytimes.com/svc/books/v3/lists/${date}/hardcover-fiction.json?api-key=rFRBnSgrDocNqeQ8na4HO1oCw6OyAYaX`)
+      const response = await fetch(`https://api.nytimes.com/svc/books/v3/lists/${date}/hardcover-fiction.json?api-key=${process.env.API_KEY}`)
       const books = await response.json()
       //console.log(books.results.bestsellers_date)
       //console.log("hi there")
